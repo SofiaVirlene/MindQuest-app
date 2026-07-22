@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindQuest - Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #121214; }
+    </style>
+</head>
+<body class="text-white font-sans flex justify-center items-center min-h-screen">
+
+    <!-- Container Estilo Celular (Visual Neutro de Entrada) -->
+    <div id="containerMovel" class="w-[375px] h-[667px] bg-[#18191a] rounded-[36px] shadow-2xl border-8 border-[#242526] flex flex-col justify-between p-6 relative overflow-hidden transition-all duration-500">
+        
+        <!-- ================= TELA DE LOGIN ================= -->
+        <div id="telaLogin" class="flex flex-col justify-between h-full">
+            <div class="text-center mt-6">
+                <!-- Ícone Neutro de Entrada -->
+                <div class="w-12 h-12 bg-[#242526] rounded-xl mx-auto flex items-center justify-center text-xl border border-gray-700 mb-3">🔮</div>
+                <h1 class="text-xl font-bold tracking-wider text-white">MindQuest</h1>
+                <p class="text-xs text-[#a0aec0] mt-1">Sua jornada de aprendizado</p>
+            </div>
+
+            <form onsubmit="realizarLogin(event)" class="space-y-4 my-auto">
+                <div>
+                    <label class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">E-mail</label>
+                    <input type="email" id="loginEmail" required placeholder="exemplo@email.com" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-4 py-3 text-xs focus:outline-none focus:border-blue-500 transition-all text-white">
+                </div>
+                <div>
+                    <label class="text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Senha</label>
+                    <input type="password" id="loginSenha" required placeholder="••••••••" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-4 py-3 text-xs focus:outline-none focus:border-blue-500 transition-all text-white">
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg transition-all text-xs tracking-wider uppercase mt-2">
+                    Entrar
+                </button>
+            </form>
+
+            <div class="text-center mb-4">
+                <p class="text-xs text-[#a0aec0]">
+                    Novo por aqui? 
+                    <button onclick="mudarParaTela('telaCadastro')" class="text-blue-500 font-bold hover:underline">Crie uma conta</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= TELA DE CADASTRO ================= -->
+        <div id="telaCadastro" class="hidden flex flex-col justify-between h-full">
+            <div class="text-center mt-4">
+                <h2 class="text-lg font-bold text-white">Criar Conta</h2>
+                <p class="text-[11px] text-[#a0aec0]">Escolha seu perfil para começar</p>
+            </div>
+
+            <form onsubmit="realizarCadastro(event)" class="space-y-3 my-auto scrollbar-none" style="overflow-y: auto; max-height: 400px;">
+                <div>
+                    <label class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Nome Completo</label>
+                    <input type="text" id="cadNome" required placeholder="Seu nome" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-white">
+                </div>
+                <div>
+                    <label class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">E-mail</label>
+                    <input type="email" id="cadEmail" required placeholder="seuemail@email.com" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-white">
+                </div>
+                <div>
+                    <label class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Senha</label>
+                    <input type="password" id="cadSenha" required placeholder="Crie uma senha" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-white">
+                </div>
+                
+                <!-- Perfil Adaptativo e Inclusivo (Sua ideia!) -->
+                <div>
+                    <label class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Quem é você no MindQuest?</label>
+                    <select id="cadPerfil" onchange="verificarCamposInstitucionais()" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-white">
+                        <option value="autodidata">Entusiasta / Autodidata 💻</option>
+                        <option value="concurseiro_vestibulando">Vestibulando ou Concurseiro 🎯</option>
+                        <option value="estudante_institucional">Aluno de Instituição (IFPI...) 🏫</option>
+                        <option value="professor">Professor / Criador de Conteúdo 🧑‍🏫</option>
+                    </select>
+                </div>
+
+                <!-- Campos Condicionais (Aparecem apenas se for estudante de instituição ou professor) -->
+                <div id="camposInstituicao" class="hidden space-y-2">
+                    <div>
+                        <label class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Instituição de Ensino</label>
+                        <input type="text" id="cadInstituicao" placeholder="Ex: IFPI" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-white">
+                    </div>
+                    <div>
+                        <label class="text-[9px] font-semibold text-gray-400 uppercase tracking-wider">Matrícula / Código</label>
+                        <input type="text" id="cadMatricula" placeholder="Código de identificação" class="w-full mt-1 bg-[#242526] border border-gray-700 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-blue-500 text-white">
+                    </div>
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-2.5 rounded-lg text-xs tracking-wider uppercase mt-2">
+                    Cadastrar
+                </button>
+            </form>
+
+            <div class="text-center mb-2">
+                <p class="text-xs text-[#a0aec0]">
+                    Já tem conta? 
+                    <button onclick="mudarParaTela('telaLogin')" class="text-blue-500 font-bold hover:underline">Fazer Login</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- ================= TELA MFA (VERIFICAÇÃO DE 2 ETAPAS) ================= -->
+        <div id="telaMFA" class="hidden flex flex-col justify-between h-full">
+            <div class="text-center mt-8">
+                <div class="w-12 h-12 bg-[#242526] rounded-full mx-auto flex items-center justify-center text-xl mb-3 border border-gray-700">🔒</div>
+                <h3 class="text-lg font-bold text-white">Verificação de Duas Etapas</h3>
+                <p class="text-xs text-[#a0aec0] mt-2 px-4">Enviamos um código de segurança temporário para o seu e-mail cadastrado.</p>
+            </div>
+
+            <form onsubmit="confirmarMFA(event)" class="space-y-6 my-auto">
+                <div class="flex justify-center">
+                    <input type="text" id="mfaCodigo" maxlength="6" required placeholder="000000" class="w-32 h-12 text-center tracking-[8px] bg-[#242526] border border-gray-700 rounded-lg text-lg font-bold focus:border-blue-500 focus:outline-none text-white">
+                </div>
+
+                <button type="submit" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-lg text-xs tracking-wider uppercase">
+                    Confirmar Código
+                </button>
+            </form>
+
+            <div class="text-center mb-4">
+                <button onclick="mudarParaTela('telaLogin')" class="text-xs text-[#a0aec0] hover:text-white font-semibold underline">Voltar para o Login</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Script de Integração do Front com o Back -->
+    <script>
+        const API_URL = "http://127.0.0.1:8000/api";
+        let emailSessao = ""; 
+
+        function mudarParaTela(idTela) {
+            document.getElementById('telaLogin').classList.add('hidden');
+            document.getElementById('telaCadastro').classList.add('hidden');
+            document.getElementById('telaMFA').classList.add('hidden');
+            
+            document.getElementById(idTela).classList.remove('hidden');
+        }
+
+        // Exibe ou oculta campos conforme o perfil escolhido
+        function verificarCamposInstitucionais() {
+            const perfil = document.getElementById('cadPerfil').value;
+            const divCampos = document.getElementById('camposInstituicao');
+            
+            if (perfil === 'estudante_institucional' || perfil === 'professor') {
+                divCampos.classList.remove('hidden');
+            } else {
+                divCampos.classList.add('hidden');
+            }
+        }
+
+        // 1. Envio do Cadastro ao Python
+        async function realizarCadastro(event) {
+            event.preventDefault();
+            const payload = {
+                nome: document.getElementById('cadNome').value,
+                email: document.getElementById('cadEmail').value,
+                senha: document.getElementById('cadSenha').value,
+                perfil: document.getElementById('cadPerfil').value,
+                instituicao: document.getElementById('cadInstituicao').value || null,
+                matricula: document.getElementById('cadMatricula').value || null
+            };
+
+            try {
+                const response = await fetch(`${API_URL}/cadastro`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
+                });
+                
+                const data = await response.json();
+                if (response.ok) {
+                    alert(data.message);
+                    mudarParaTela('telaLogin');
+                } else {
+                    alert(data.detail);
+                }
+            } catch (error) {
+                alert("Erro ao conectar ao back-end. Certifique-se de que o Python está rodando na porta 8000!");
+            }
+        }
+
+        // 2. Login - Primeiro Fator
+        async function realizarLogin(event) {
+            event.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const senha = document.getElementById('loginSenha').value;
+
+            try {
+                const response = await fetch(`${API_URL}/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, senha })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    emailSessao = email;
+                    alert("Senha correta! O seu código de verificação foi gerado no terminal do Python (main.py).");
+                    mudarParaTela('telaMFA');
+                } else {
+                    alert(data.detail);
+                }
+            } catch (error) {
+                alert("Erro ao conectar-se ao servidor de autenticação.");
+            }
+        }
+
+        // 3. Login - Segundo Fator (MFA)
+        async function confirmarMFA(event) {
+            event.preventDefault();
+            const codigo = document.getElementById('mfaCodigo').value;
+
+            try {
+                const response = await fetch(`${API_URL}/login/mfa`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email: emailSessao, codigo })
+                });
+
+                const data = await response.json();
+                if (response.ok) {
+                    // Salva as informações básicas no navegador do usuário
+                    localStorage.setItem('mq_nome', data.usuario.nome);
+                    localStorage.setItem('mq_perfil', data.usuario.perfil);
+                    
+                    alert(`Autenticação concluída! Bem-vindo(a), ${data.usuario.nome}!`);
+                    // Pronto para o redirecionamento:
+                    // window.location.href = "feed.html";
+                } else {
+                    alert(data.detail);
+                }
+            } catch (error) {
+                alert("Erro ao enviar o código de verificação.");
+            }
+        }
+    </script>
+</body>
+</html>
