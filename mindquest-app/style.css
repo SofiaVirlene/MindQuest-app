@@ -1,0 +1,505 @@
+/* =========================================
+   1. RESET & FRAMEWORK MOBILE
+   ========================================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: #0b0b12;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.app-container {
+  width: 100vw;
+  height: 100vh;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: #12121e;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-sizing: border-box;
+}
+
+/* Moldura simuladora de Celular no Computador */
+@media (min-width: 600px) {
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #05050a;
+  }
+  
+  .app-container {
+    width: 390px;
+    height: 844px;
+    border-radius: 36px;
+    border: 8px solid #1f1f33;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+    overflow: hidden;
+  }
+}
+
+/* =========================================
+   2. HEADER & LAYOUT GERAL
+   ========================================= */
+.app-header {
+  background-color: #161626;
+  padding: 16px 20px 10px 20px;
+  border-bottom: 1px solid #1f1f33;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo-text {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.icon-btn {
+  background: none;
+  border: none;
+  color: #a0a0c0;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+.subject-tag {
+  text-align: center;
+  margin-top: 6px;
+  margin-bottom: 12px;
+}
+
+.subject-tag span {
+  font-size: 0.75rem;
+  color: #7b7b9d;
+  background-color: #1c1c30;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+/* Sub-navegação do topo */
+.sub-nav {
+  display: flex;
+  justify-content: space-around;
+  padding-top: 6px;
+}
+
+.sub-nav-btn {
+  background: none;
+  border: none;
+  color: #666688;
+  font-size: 1.2rem;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+
+.sub-nav-btn.active {
+  color: #ffffff;
+  border-bottom: 2px solid #5d5fef;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.main-content::-webkit-scrollbar {
+  display: none;
+}
+
+/* =========================================
+   3. FEED
+   ========================================= */
+.post-card {
+  background-color: #1a1a2e;
+  border-radius: 16px;
+  padding: 16px;
+  border: 1px solid #252542;
+}
+
+.post-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.author-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #2a2a4a;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #8888b0;
+  font-size: 0.9rem;
+}
+
+.author-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.author-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.post-time {
+  font-size: 0.75rem;
+  color: #666688;
+}
+
+.post-body p {
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: #d0d0e8;
+  margin-bottom: 14px;
+}
+
+.post-footer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  border-top: 1px solid #23233c;
+  padding-top: 10px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  color: #8888a8;
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+.share-btn {
+  margin-left: auto;
+}
+
+/* =========================================
+   4. PERFIL / DASHBOARD
+   ========================================= */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 4px;
+  margin-bottom: 12px;
+}
+
+.profile-avatar {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  color: #12121e;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.8rem;
+  margin-bottom: 8px;
+}
+
+.profile-username {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.profile-role {
+  font-size: 0.75rem;
+  color: #7b7b9d;
+}
+
+.user-card {
+  width: 100%;
+  background-color: #262740;
+  border-radius: 14px;
+  padding: 12px 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.user-fullname {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.guild-name {
+  font-size: 0.75rem;
+  color: #9a9abf;
+}
+
+.user-card-badge {
+  color: #d1d1f0;
+  font-size: 1.1rem;
+}
+
+.level-section {
+  width: 100%;
+}
+
+.level-title {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 6px;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background-color: #212135;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #5d5fef, #8082ff);
+}
+
+.dashboard-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.grid-column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dash-item {
+  background-color: #1a1a2e;
+  border: 1px solid #282846;
+  border-radius: 12px;
+  padding: 10px 12px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.item-number {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 1px solid #5d5fef;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.item-text {
+  font-size: 0.75rem;
+  color: #d0d0e8;
+}
+
+.rank-badge {
+  background-color: #282846;
+  color: #ffffff;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+
+.quiz-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.quiz-title {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.quiz-stats {
+  font-size: 0.65rem;
+  color: #8888a8;
+}
+
+/* =========================================
+   5. LOBBY & QUIZ RODANDO
+   ========================================= */
+.create-quiz-card {
+  background-color: #1d1d36;
+  border: 1px solid #2d2d54;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.create-quiz-card span {
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.btn-primary {
+  background-color: #5d5fef;
+  color: #ffffff;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.quiz-card-item {
+  background-color: #1a1a2e;
+  border: 1px solid #252542;
+  border-radius: 12px;
+  padding: 12px 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quiz-card-item h4 {
+  font-size: 0.85rem;
+  color: #ffffff;
+}
+
+.quiz-card-item p {
+  font-size: 0.7rem;
+  color: #7b7b9d;
+}
+
+/* TELA DO QUIZ ATIVO */
+.quiz-stepper {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 20px;
+}
+
+.step-num {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #555577;
+}
+
+.step-num.active {
+  color: #ffffff;
+  border-bottom: 2px solid #5d5fef;
+}
+
+.question-box {
+  margin: 20px 0;
+  text-align: center;
+}
+
+.question-text {
+  font-size: 1.05rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: #ffffff;
+}
+
+.options-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-card {
+  background-color: #1a1a2e;
+  border: 1px solid #2b2b48;
+  border-radius: 10px;
+  padding: 12px;
+  font-size: 0.75rem;
+  color: #d0d0e8;
+  cursor: pointer;
+  text-align: center;
+}
+
+.option-card.selected-neon {
+  border: 1px solid #00f0ff;
+  box-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+  color: #ffffff;
+}
+
+.btn-cyan {
+  width: 100%;
+  background-color: #00b4d8;
+  color: #ffffff;
+  border: none;
+  padding: 14px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: auto;
+}
+
+/* =========================================
+   6. BOTTOM NAVIGATION
+   ========================================= */
+.bottom-nav {
+  height: 65px;
+  background-color: #141424;
+  border-top: 1px solid #1f1f33;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 0 8px;
+}
+
+.nav-item {
+  background: none;
+  border: none;
+  color: #555577;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.65rem;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-item i {
+  font-size: 1.1rem;
+}
+
+.nav-item.active {
+  color: #ffffff;
+}
+
+.nav-item.active i {
+  color: #5d5fef;
+}
