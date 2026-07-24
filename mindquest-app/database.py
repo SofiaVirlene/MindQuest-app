@@ -1,30 +1,16 @@
+import os
 import psycopg2
 from psycopg2.extras import RealDictCursor
+from dotenv import load_dotenv
 
-# Cole aqui a string ajustada com a sua senha
-DATABASE_URL = "postgresql://postgres:ads2025.2p2mq@db.pvmpssupfckfmvvnnoan.supabase.co:5432/postgres?sslmode=require"
+# Carrega as variáveis do arquivo .env local
+load_dotenv()
+
+# Pega a URL da variável de ambiente (ou lança erro se não encontrar)
+DATABASE_URL = os.getenv("DATABASE_URL")
+
 def get_connection():
+    if not DATABASE_URL:
+        raise ValueError("A variável de ambiente DATABASE_URL não foi configurada!")
     conn = psycopg2.connect(DATABASE_URL, cursor_factory=RealDictCursor)
     return conn
-
-def criar_tabelas():
-    conn = get_connection()
-    cursor = conn.cursor()
-    
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS usuarios (
-            id SERIAL PRIMARY KEY,
-            nome VARCHAR(150) NOT NULL,
-            email VARCHAR(150) UNIQUE NOT NULL,
-            senha_hash TEXT NOT NULL,
-            perfil VARCHAR(50) NOT NULL,
-            instituicao VARCHAR(150),
-            matricula VARCHAR(50)
-        );
-    """)
-    
-    conn.commit()
-    cursor.close()
-    conn.close()
-
-criar_tabelas()
