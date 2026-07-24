@@ -182,3 +182,38 @@ def redefinir_senha(dados: RedefinirSenhaRequest):
     conn.close()
 
     return {"message": "Senha redefinida com sucesso! Você já pode realizar o login."}
+
+@app.post("/api/redefinir-senha")
+def redefinir_senha(dados: RedefinirSenhaRequest):
+    # 1. Valida se o código enviado tem o formato correto (6 dígitos)
+    if not auth.validar_codigo_recuperacao(dados.email, dados.codigo):
+        raise HTTPException(
+            status_code=400, 
+            detail="Código de recuperação inválido ou formatado incorretamente."
+        )
+
+    conn = database.get_connection()
+    cursor = conn.cursor()
+
+    # 2. Confirma se o usuário existe no banco
+    cursor.execute("SELECT id FROM usuarios WHERE email = %s;", (dados.email,))
+    usuario = cursor.fetchone()
+
+    if not usuario:
+        cursor.close()
+        conn.close()
+        raise HTTPException(status_code=404, detail="E-mail não encontrado.")
+
+    # 3. Gera o novo hash bcrypt para a nova senha
+    nova_hash = auth.gerar_hash_senha(dados.nova_senha)
+
+    # 4. Atualiza a senha no banco de dados
+    cursor.execute(
+        "UPDATE usuarios SET senha_hash = %s WHERE email = %s;", 
+        (nova_hash, dados.email)
+    )
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    return {"message": "Senha redefinida com sucesso! Você já pode realizar o login com sua nova senha."}
